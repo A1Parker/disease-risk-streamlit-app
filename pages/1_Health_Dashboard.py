@@ -2,37 +2,30 @@ import streamlit as st
 import plotly.express as px
 from utils.data_loader import load_data
 # ====== beautification ========
-def metric_card(title, value, accent="#22D3EE"):
+st.markdown("""
+<style>
 
-    st.markdown(f"""
-    <div style="
-        background: linear-gradient(145deg, rgba(30,41,59,0.6), rgba(15,23,42,0.8));
-        padding:22px;
-        border-radius:18px;
-        border-left: 5px solid {accent};
-        backdrop-filter: blur(12px);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-        transition: 0.3s ease-in-out;
-    ">
-        <p style="
-            color:#94A3B8;
-            font-size:14px;
-            margin-bottom:5px;
-            letter-spacing:0.5px;
-        ">
-            {title}
-        </p>
+div[data-testid="stMetric"] {
+    background: linear-gradient(145deg, rgba(30,41,59,0.6), rgba(15,23,42,0.8));
+    padding: 20px;
+    border-radius: 18px;
+    border-left: 5px solid #22D3EE;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
 
-        <h2 style="
-            color:white;
-            font-size:28px;
-            font-weight:600;
-            margin:0;
-        ">
-            {value}
-        </h2>
-    </div>
-    """, unsafe_allow_html=True)
+div[data-testid="stMetric"] label {
+    color: #94A3B8 !important;
+    font-size: 14px !important;
+}
+
+div[data-testid="stMetric"] div {
+    color: white !important;
+    font-size: 28px !important;
+    font-weight: 600 !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 # ========
 
@@ -81,37 +74,13 @@ bmi_color = "#EF4444" if avg_bmi > 30 else "#22D3EE"
 chol_color = "#EF4444" if avg_chol > 240 else "#22D3EE"
 
 # ================= KPI ROW =================
-st.markdown("## 📊 Health Overview")
-st.markdown("")
-
 col1, col2, col3, col4, col5 = st.columns(5)
 
-with col1:
-    metric_card("Population",
-                f"{len(df):,}",
-                "#22D3EE")
-
-with col2:
-    metric_card("Avg BMI",
-                f"{avg_bmi:.2f}",
-                bmi_color)
-
-with col3:
-    metric_card("Avg Sugar Intake",
-                f"{df['sugar_intake'].mean():.2f}",
-                "#A78BFA")
-
-with col4:
-    metric_card("Avg Disease Risk %",
-                f"{avg_risk:.2f}%",
-                risk_color)
-
-with col5:
-    metric_card("Avg Cholesterol",
-                f"{avg_chol:.2f}",
-                chol_color)
-
-st.divider()
+col1.metric("Population", f"{len(df):,}")
+col2.metric("Avg BMI", f"{avg_bmi:.2f}")
+col3.metric("Avg Sugar Intake", f"{df['sugar_intake'].mean():.2f}")
+col4.metric("Avg Disease Risk %", f"{avg_risk:.2f}%")
+col5.metric("Avg Cholesterol", f"{avg_chol:.2f}")
 
 # ================= AGE GROUP DONUT =================
 col1, col2, col3 = st.columns(3)
