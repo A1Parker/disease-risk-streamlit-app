@@ -1,7 +1,43 @@
 import streamlit as st
 import plotly.express as px
 from utils.data_loader import load_data
+
+st.set_page_config(layout="wide")
 #==
+st.markdown("""
+<style>
+
+/* Sidebar background */
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #0f172a 0%, #0b1220 100%);
+}
+
+/* Sidebar section title (Filters) */
+section[data-testid="stSidebar"] h2 {
+    color: #FFFFFF !important;
+}
+
+/* Multiselect label text (Gender, Job Type, Occupation) */
+section[data-testid="stSidebar"] div[data-baseweb="select"] > div {
+    color: #FFFFFF !important;
+}
+
+/* Make the dropdown container slightly lighter */
+section[data-testid="stSidebar"] div[data-baseweb="select"] {
+    background-color: #111827 !important;
+}
+
+/* Selected tags */
+section[data-testid="stSidebar"] span[data-baseweb="tag"] {
+    background-color: #22D3EE !important;
+    color: black !important;
+    font-weight: 600;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
 st.markdown("""
 <style>
 
@@ -35,7 +71,7 @@ div[data-testid="stMetric"] div {
 
 
 #====
-st.set_page_config(layout="wide")
+
 df = load_data()
 
 # ================= SIDEBAR FILTERS =================
