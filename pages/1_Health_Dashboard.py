@@ -1,6 +1,40 @@
 import streamlit as st
 import plotly.express as px
 from utils.data_loader import load_data
+# ====== beautification ========
+def metric_card(title, value, accent="#22D3EE"):
+
+    st.markdown(f"""
+    <div style="
+        background: linear-gradient(145deg, rgba(30,41,59,0.6), rgba(15,23,42,0.8));
+        padding:22px;
+        border-radius:18px;
+        border-left: 5px solid {accent};
+        backdrop-filter: blur(12px);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+        transition: 0.3s ease-in-out;
+    ">
+        <p style="
+            color:#94A3B8;
+            font-size:14px;
+            margin-bottom:5px;
+            letter-spacing:0.5px;
+        ">
+            {title}
+        </p>
+
+        <h2 style="
+            color:white;
+            font-size:28px;
+            font-weight:600;
+            margin:0;
+        ">
+            {value}
+        </h2>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ========
 
 st.set_page_config(layout="wide")
 df = load_data()
@@ -36,15 +70,46 @@ df = df[
 ]
 
 st.title("📊 Health Overview Dashboard")
+# ============ beautification for kpis ======
+avg_risk = df["risk_probability"].mean() * 100
+avg_bmi = df["bmi"].mean()
+avg_chol = df["cholesterol"].mean()
+
+
+risk_color = "#EF4444" if avg_risk > 60 else "#F59E0B" if avg_risk > 35 else "#10B981"
+bmi_color = "#EF4444" if avg_bmi > 30 else "#22D3EE"
+chol_color = "#EF4444" if avg_chol > 240 else "#22D3EE"
 
 # ================= KPI ROW =================
+st.markdown("## 📊 Health Overview")
+st.markdown("")
+
 col1, col2, col3, col4, col5 = st.columns(5)
 
-col1.metric("Population", f"{len(df):,}")
-col2.metric("Avg BMI", round(df["bmi"].mean(), 2))
-col3.metric("Avg Sugar Intake", round(df["sugar_intake"].mean(), 2))
-col4.metric("Avg Disease Risk %", round(df["risk_probability"].mean()*100, 2))
-col5.metric("Avg Cholesterol", round(df["cholesterol"].mean(), 2))
+with col1:
+    metric_card("Population",
+                f"{len(df):,}",
+                "#22D3EE")
+
+with col2:
+    metric_card("Avg BMI",
+                f"{avg_bmi:.2f}",
+                bmi_color)
+
+with col3:
+    metric_card("Avg Sugar Intake",
+                f"{df['sugar_intake'].mean():.2f}",
+                "#A78BFA")
+
+with col4:
+    metric_card("Avg Disease Risk %",
+                f"{avg_risk:.2f}%",
+                risk_color)
+
+with col5:
+    metric_card("Avg Cholesterol",
+                f"{avg_chol:.2f}",
+                chol_color)
 
 st.divider()
 
