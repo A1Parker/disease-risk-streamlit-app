@@ -15,12 +15,12 @@ div[data-testid="stMetric"] {
 
 div[data-testid="stMetric"] label {
     color: #94A3B8 !important;
-    font-size: 14px !important;
+    font-size: 10px !important;
 }
 
 div[data-testid="stMetric"] div {
     color: white !important;
-    font-size: 28px !important;
+    font-size: 20px !important;
     font-weight: 600 !important;
 }
 
@@ -74,13 +74,17 @@ bmi_color = "#EF4444" if avg_bmi > 30 else "#22D3EE"
 chol_color = "#EF4444" if avg_chol > 240 else "#22D3EE"
 
 # ================= KPI ROW =================
-col1, col2, col3, col4, col5 = st.columns(5)
+st.markdown("## 📊 Health Overview")
+st.markdown("")
+
+col1, col2, col3, col4 = st.columns(4)
 
 col1.metric("Population", f"{len(df):,}")
 col2.metric("Avg BMI", f"{avg_bmi:.2f}")
 col3.metric("Avg Sugar Intake", f"{df['sugar_intake'].mean():.2f}")
 col4.metric("Avg Disease Risk %", f"{avg_risk:.2f}%")
-col5.metric("Avg Cholesterol", f"{avg_chol:.2f}")
+
+st.divider()
 
 # ================= AGE GROUP DONUT =================
 col1, col2, col3 = st.columns(3)
