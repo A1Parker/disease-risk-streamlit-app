@@ -80,6 +80,74 @@ with col2:
             st.error("⚠ High Disease Risk Detected")
         else:
             st.success("✅ Low Disease Risk Detected")
+        ## recommendation code
+        st.markdown("### 🩺 Personalized Health Insights")
 
+recommendations = []
+
+# --- High Risk Logic ---
+if probability > 50:
+
+    if physical_activity < 30:
+        recommendations.append("• Increase daily physical activity to at least 30 minutes.")
+
+    if sleep_hours < 6:
+        recommendations.append("• Improve sleep duration (target 7–8 hours per night).")
+
+    if stress_level > 7:
+        recommendations.append("• Practice stress management techniques (meditation, breathing exercises).")
+
+    if daily_steps < 5000:
+        recommendations.append("• Increase daily steps (aim for 8,000–10,000 steps).")
+
+    if cholesterol > 240:
+        recommendations.append("• Monitor cholesterol levels and consider dietary adjustments.")
+
+    if glucose > 140:
+        recommendations.append("• Monitor glucose levels and reduce sugar intake.")
+
+    if heart_rate > 100:
+        recommendations.append("• Elevated heart rate detected — consider cardiovascular evaluation.")
+
+    if recommendations:
+        for rec in recommendations:
+            st.warning(rec)
     else:
-        st.info("Enter values and click Predict to see AI assessment.")
+        st.warning("General lifestyle improvement recommended. Consider consulting a healthcare professional.")
+
+# --- Low Risk Reinforcement ---
+elif probability < 25:
+
+    positive_points = []
+
+    if physical_activity >= 30:
+        positive_points.append("✔ Good physical activity level.")
+
+    if sleep_hours >= 7:
+        positive_points.append("✔ Healthy sleep duration.")
+
+    if stress_level <= 5:
+        positive_points.append("✔ Well-managed stress levels.")
+
+    if daily_steps >= 7000:
+        positive_points.append("✔ Active daily movement.")
+
+    if cholesterol < 200:
+        positive_points.append("✔ Healthy cholesterol range.")
+
+    if glucose < 110:
+        positive_points.append("✔ Stable glucose level.")
+
+    if positive_points:
+        st.success("🎉 You are maintaining good health habits!")
+        for point in positive_points:
+            st.success(point)
+    else:
+        st.success("You are currently at low risk. Maintain a balanced lifestyle to stay healthy.")
+
+# --- Moderate Risk ---
+else:
+    st.info("⚠ Moderate risk detected. Small lifestyle improvements can significantly reduce future risk.")
+
+#else:
+    #st.info("Enter values and click Predict to see AI assessment.")
