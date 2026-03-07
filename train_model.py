@@ -62,7 +62,11 @@ data["stress_category"] = pd.cut(
     labels=["Low","Moderate","High"],
     include_lowest=True
 )
-
+data["smoking_level"] = data["smoking_level"].map({
+    "Non-smoker": 0,
+    "Light": 1,
+    "Heavy": 2
+})
 # ================= RISK SCORE =================
 
 data["risk_score"] = 0
