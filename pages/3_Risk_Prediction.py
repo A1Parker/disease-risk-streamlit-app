@@ -1,5 +1,7 @@
 import streamlit as st
 import numpy as np
+import plotly.express as px
+import pandas as pd
 import plotly.graph_objects as go
 from utils.model_loader import load_model
 
@@ -21,7 +23,7 @@ with col1:
     daily_steps = st.number_input("Daily Steps", 0, 30000)
     stress_level = st.number_input("Stress Level (1-10)", 1, 10)
     sleep_hours = st.number_input("Sleep Hours", 0.0, 12.0)
-    physical_activity = st.number_input("Physical Activity (minutes)", 0, 300)
+    physical_activity = st.number_input("Physical Activity (Hours)", 0, 10)
     cholesterol = st.number_input("Cholesterol Level", 100, 400)
     glucose = st.number_input("Glucose Level", 50, 300)
     heart_rate = st.number_input("Heart Rate", 40, 150)
@@ -151,3 +153,37 @@ with col2:
 
     else:
         st.info("Enter values and click Predict to see AI assessment.")
+        # ================= FEATURE IMPORTANCE =================
+
+st.markdown("### 🔎 Top Factors Affecting Disease Risk")
+
+features = [
+    "Age",
+    "BMI",
+    "Daily Steps",
+    "Stress Level",
+    "Sleep Hours",
+    "Physical Activity",
+    "Cholesterol",
+    "Glucose",
+    "Heart Rate"
+]
+
+importances = model.feature_importances_
+
+importance_df = pd.DataFrame({
+    "Feature": features,
+    "Importance": importances
+}).sort_values(by="Importance", ascending=False)
+
+fig = px.bar(
+    importance_df,
+    x="Importance",
+    y="Feature",
+    orientation="h",
+    title="Model Feature Importance",
+    color="Importance",
+    color_continuous_scale="Blues"
+)
+
+st.plotly_chart(fig, use_container_width=True)
