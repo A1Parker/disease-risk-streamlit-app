@@ -23,7 +23,7 @@ with col1:
     daily_steps = st.number_input("Daily Steps", 0, 30000)
     stress_level = st.number_input("Stress Level (1-10)", 1, 10)
     sleep_hours = st.number_input("Sleep Hours", 0.0, 12.0)
-    physical_activity = st.number_input("Physical Activity (Hours)", 0.0, 10.0)
+    physical_activity = st.number_input("Physical Activity (Hours)", 0, 10)
     cholesterol = st.number_input("Cholesterol Level", 100, 400)
     glucose = st.number_input("Glucose Level", 50, 300)
     heart_rate = st.number_input("Heart Rate", 40, 150)
