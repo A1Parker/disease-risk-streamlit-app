@@ -1,67 +1,14 @@
 import streamlit as st
 import plotly.express as px
 from utils.data_loader import load_data
+from utils.ui_styles import apply_styles
+apply_styles()
+
+from utils.chart_style import apply_chart_style
 
 st.set_page_config(layout="wide")
 # ====== beautification ========
-st.markdown("""
-<style>
 
-/* Sidebar background */
-section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0f172a 0%, #0b1220 100%);
-}
-
-/* Sidebar section title (Filters) */
-section[data-testid="stSidebar"] h2 {
-    color: #FFFFFF !important;
-}
-
-/* Multiselect label text (Gender, Job Type, Occupation) */
-section[data-testid="stSidebar"] div[data-baseweb="select"] > div {
-    color: #FFFFFF !important;
-}
-
-/* Make the dropdown container slightly lighter */
-section[data-testid="stSidebar"] div[data-baseweb="select"] {
-    background-color: #111827 !important;
-}
-
-/* Selected tags */
-section[data-testid="stSidebar"] span[data-baseweb="tag"] {
-    background-color: #22D3EE !important;
-    color: black !important;
-    font-weight: 600;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-
-st.markdown("""
-<style>
-
-div[data-testid="stMetric"] {
-    background: linear-gradient(145deg, rgba(30,41,59,0.6), rgba(15,23,42,0.8));
-    padding: 20px;
-    border-radius: 18px;
-    border-left: 5px solid #22D3EE;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-}
-
-div[data-testid="stMetric"] label {
-    color: #94A3B8 !important;
-    font-size: 10px !important;
-}
-
-div[data-testid="stMetric"] div {
-    color: white !important;
-    font-size: 20px !important;
-    font-weight: 600 !important;
-}
-
-</style>
-""", unsafe_allow_html=True)
 
 # ========
 
@@ -123,7 +70,7 @@ col4.metric("Avg Disease Risk %", f"{avg_risk:.2f}%")
 st.divider()
 
 # ================= AGE GROUP DONUT =================
-col1, col2, col3 = st.columns(3)
+col1, col2 = st.columns(2)
 
 with col1:
     fig = px.pie(
@@ -132,6 +79,14 @@ with col1:
         hole=0.6,
         title="Age Group Distribution"
     )
+    fig.update_layout(
+        legend=dict(
+            orientation="v",
+            y=0.9,
+            x=1.05
+        )
+    )
+    fig = apply_chart_style(fig)
     st.plotly_chart(fig, use_container_width=True)
 
 # ================= ALCOHOL CONSUMPTION =================
@@ -144,16 +99,17 @@ fig = px.bar(
     y="count",
     title="Alcohol Consumption"
 )
-
+fig = apply_chart_style(fig)
 st.plotly_chart(fig, use_container_width=True)
 
-with col3:
+with col2:
     fig = px.pie(
         df,
         names="bmi_category",
         hole=0.6,
         title="BMI Distribution"
     )
+    fig = apply_chart_style(fig)
     st.plotly_chart(fig, use_container_width=True)
 
 st.divider()
@@ -167,6 +123,7 @@ fig = px.bar(
     barmode="group",
     title="Health Condition Among Age Group"
 )
+fig = apply_chart_style(fig)
 st.plotly_chart(fig, use_container_width=True)
 
 # ================= SMOKER DISTRIBUTION =================
@@ -176,4 +133,5 @@ fig = px.pie(
     hole=0.6,
     title="Smoker Distribution"
 )
+fig = apply_chart_style(fig)
 st.plotly_chart(fig, use_container_width=True)

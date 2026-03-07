@@ -4,6 +4,9 @@ import plotly.express as px
 import pandas as pd
 import plotly.graph_objects as go
 from utils.model_loader import load_model
+from utils.ui_styles import apply_styles
+apply_styles()
+from utils.chart_style import apply_chart_style
 
 st.set_page_config(layout="wide")
 
@@ -61,9 +64,9 @@ with col2:
                 'axis': {'range': [0, 100]},
                 'bar': {'color': color},
                 'steps': [
-                    {'range': [0, 35], 'color': "#064E3B"},
-                    {'range': [35, 60], 'color': "#78350F"},
-                    {'range': [60, 100], 'color': "#7F1D1D"},
+                    {'range': [0, 35], 'color': "#22D3EE"},
+                    {'range': [35, 60], 'color': "#FB923C"},
+                    {'range': [60, 100], 'color': "#EC4899"},
                 ],
             }
         ))
@@ -74,7 +77,7 @@ with col2:
             font={'color': "white"},
             height=400
         )
-
+        fig = apply_chart_style(fig)
         st.plotly_chart(fig, use_container_width=True)
 
         # Final Message
@@ -185,5 +188,5 @@ fig = px.bar(
     color="Importance",
     color_continuous_scale="Blues"
 )
-
+fig = apply_chart_style(fig)
 st.plotly_chart(fig, use_container_width=True)
