@@ -59,6 +59,7 @@ with col2:
         fig = go.Figure(go.Indicator(
             mode="gauge+number",
             value=probability,
+            domain={'x': [0.05, 0.95], 'y': [0, 1]},
             number={'suffix': "%"},
             gauge={
                 'axis': {'range': [0, 100]},

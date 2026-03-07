@@ -2,6 +2,7 @@ def apply_chart_style(fig):
 
     fig.update_layout(
 
+
         template="plotly_dark",
 
         paper_bgcolor="rgba(0,0,0,0)",
@@ -31,15 +32,7 @@ def apply_chart_style(fig):
         )
     )
 
-    # Axis spacing
-    fig.update_xaxes(
-        title_standoff=25,
-        automargin=True
-    )
-
-    fig.update_yaxes(
-        title_standoff=25,
-        automargin=True
-    )
+    fig.update_xaxes(automargin=True)
+    fig.update_yaxes(automargin=True)
 
     return fig
