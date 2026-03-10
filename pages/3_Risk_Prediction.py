@@ -65,9 +65,9 @@ with col2:
                 'axis': {'range': [0, 100]},
                 'bar': {'color': color},
                 'steps': [
-                    {'range': [0, 35], 'color': "#22D3EE"},
-                    {'range': [35, 60], 'color': "#FB923C"},
-                    {'range': [60, 100], 'color': "#EC4899"},
+                    {'range': [0, 35], 'color': "#22C55E"},
+                    {'range': [35, 60], 'color': "#FACC15"},
+                    {'range': [60, 100], 'color': "#EF4444"},
                 ],
             }
         ))
